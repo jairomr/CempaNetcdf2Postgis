@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "CempaNetcdf2Postgis"
+version = "0.1.0"
+description = ""
+authors = ["Rocha, Jairo <devjairomr@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+geopandas = "^0.10.2"
+netCDF4 = "^1.5.8"
+pandas = "^1.4.0"
+numpy = "^1.22.1"
+click = "^8.0.3"
+dynaconf = "^3.1.7"
+SQLAlchemy = "^1.4.31"
+loguru = "^0.5.3"
+GeoAlchemy2 = "^0.10.2"
+psycopg2 = "^2.9.3"
+
+[tool.poetry.dev-dependencies]
+black = "^21.12b0"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+mypy = "^0.931"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
