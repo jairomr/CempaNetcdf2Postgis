@@ -1,0 +1,6 @@
+FILES_NC = "/Volumes/backup/dowloads/2022011200"
+vars = ['albedt','tempc','ue_avg','ve_avg',
+'w','rh','geo','cloud','precip','acccon',
+'sfc_press','sea_press','t2mj','td2mj','u10mj',
+'v10mj','le','h','rshort','rlong','rlongup']
+DBLINK = 'postgresql+psycopg2://postgres:Javevi@localhost:5431/cempa'
