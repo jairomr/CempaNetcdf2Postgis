@@ -1,5 +1,4 @@
 from cempa import model
-
 from cempa.db import session
 
 

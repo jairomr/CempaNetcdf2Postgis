@@ -5,10 +5,11 @@ import pandas as pd
 from netCDF4 import Dataset
 
 from cempa.config import is_goias, lats, logger, lons, ormdtype, settings
-from cempa.functions import exists_in_the_bank, get_list_nc, save_hash, get_time
-from cempa.hash import data_frame2hash, generate_file_md5
 from cempa.db import engine
+from cempa.functions import exists_in_the_bank, get_list_nc, get_time, save_hash
+from cempa.hash import data_frame2hash, generate_file_md5
 from cempa.netCDFtoTIFF import nc2tiff
+
 
 def netcsf2sql(file_name: str, rootgrp: Dataset) -> bool:
     error = False
@@ -28,7 +29,7 @@ def netcsf2sql(file_name: str, rootgrp: Dataset) -> bool:
             camadas = {}
             if len(np.squeeze(tempc)) == 19:
                 for c, var in enumerate(np.squeeze(tempc), 1):
-                    camadas[f"{name}_{c:02}"] =  var.flatten()
+                    camadas[f"{name}_{c:02}"] = var.flatten()
                     nc2tiff(name, var.flatten(), f"{name}_{c:02}", file_name)
             else:
                 camadas = {f"{name}": np.squeeze(tempc).flatten()}

@@ -1,8 +1,8 @@
-from glob import glob
 from datetime import datetime
+from glob import glob
 
-from sqlalchemy import select
 import seaborn as sns
+from sqlalchemy import select
 
 from cempa.model import FileHash, session
 
@@ -12,7 +12,7 @@ def get_time(name: str, return_txt=False) -> str:
         name.split("/")[-1].replace("Go05km-A-", "").replace("00-g1.nc", "")
     )
     if return_txt:
-        return date_time_str.replace("-","")
+        return date_time_str.replace("-", "")
     return str(datetime.strptime(date_time_str, "%Y-%m-%d-%H%M%S"))
 
 
@@ -42,6 +42,7 @@ def exists_in_the_bank(file_hash: str) -> bool:
 def save_hash(str_hash: str) -> None:
     session.add(FileHash(file_hash=str_hash))
     session.commit()
+
 
 def get_pallet(_min, _max, color_name="magma", n_class=25):
     yield from [
