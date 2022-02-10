@@ -1,5 +1,6 @@
 {
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": ["--ignore=E722,W503"]
+    "python.linting.flake8Args": ["--ignore=E722,W503"],
+    "terminal.integrated.shell.osx": "/bin/zsh"
 }
