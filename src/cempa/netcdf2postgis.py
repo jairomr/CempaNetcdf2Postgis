@@ -1,12 +1,15 @@
-from datetime import datetime
-
 import numpy as np
 import pandas as pd
 from netCDF4 import Dataset
 
 from cempa.config import is_goias, lats, logger, lons, ormdtype, settings
 from cempa.db import engine
-from cempa.functions import exists_in_the_bank, get_list_nc, get_time, save_hash
+from cempa.functions import (
+    exists_in_the_bank,
+    get_list_nc,
+    get_time,
+    save_hash,
+)
 from cempa.hash import data_frame2hash, generate_file_md5
 from cempa.netCDFtoTIFF import nc2tiff
 
@@ -20,7 +23,7 @@ def netcsf2sql(file_name: str, rootgrp: Dataset) -> bool:
                 f"Processando varivael {name} de {file_name.split('/')[-1]}"
             )
 
-            vtime, latitudes_grid, longitudes_grid = [
+            vtime, _ = [
                 x.flatten()
                 for x in np.meshgrid(
                     get_time(file_name), lats, lons, indexing="ij"
