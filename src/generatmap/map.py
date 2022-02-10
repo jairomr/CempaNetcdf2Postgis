@@ -1,24 +1,29 @@
 from jinja2 import Environment, PackageLoader, select_autoescape
 from sqlalchemy import select
 
-from cempa.functions import get_min_max, get_pallet
+from cempa.config import logger, settings
 from cempa.db import session
+from cempa.functions import get_min_max, get_pallet
 from cempa.model import StyleMap
-from cempa.config import settings, logger
 
-def creat_map_file(file_name,  coll_name, min_max= False, geotiff = False):
+
+def creat_map_file(file_name, coll_name, min_max=False, geotiff=False):
     logger.info("Criando o .map para o tiff")
     env = Environment(
         loader=PackageLoader("generatmap"), autoescape=select_autoescape()
     )
 
-    with open(file_name.replace(".tif",".map"), "w") as file_object:
+    with open(file_name.replace(".tif", ".map"), "w") as file_object:
         template = env.get_template("cempa.map")
         row = {}
         try:
-            row = session.execute(select(
-                StyleMap).where(StyleMap.coll_table == coll_name)
-            ).first()[0].to_dict()
+            row = (
+                session.execute(
+                    select(StyleMap).where(StyleMap.coll_table == coll_name)
+                )
+                .first()[0]
+                .to_dict()
+            )
             logger.info(
                 f"Creating table layer '{row['table_name']}' from variable '{row['coll_table']}'"
             )
@@ -38,18 +43,19 @@ def creat_map_file(file_name,  coll_name, min_max= False, geotiff = False):
         try:
             file_object.write(
                 template.render(
-                {
-                    **row,
-                    "styles": get_pallet(
-                    *_minmax,
-                    row["palette"],
-                ),
-                }
-            ))
+                    {
+                        **row,
+                        "styles": get_pallet(
+                            *_minmax,
+                            row["palette"],
+                        ),
+                    }
+                )
+            )
         except:
             logger.exception("Error")
-            
-            
+
+
 def creat_by_bd():
     env = Environment(
         loader=PackageLoader("generatmap"), autoescape=select_autoescape()
