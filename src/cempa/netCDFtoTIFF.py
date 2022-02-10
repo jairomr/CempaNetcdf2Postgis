@@ -115,5 +115,5 @@ def nc2tiff(name, var, coll_name, file_name):
     triInterpRaster.write(zCoords, 1)
     triInterpRaster.close()
     creat_map_file(name_tif, coll_name, min_max=min_max, geotiff=True)
-    logger.info(f"Tempo de crianção para tif e map: {time() - start_time}")
+    logger.info(f"Tempo de crianção para tif e map: {time() - start_time}s")
     return None

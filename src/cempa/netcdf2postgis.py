@@ -18,7 +18,7 @@ def netcsf2sql(file_name: str, rootgrp: Dataset) -> bool:
                 f"Processando varivael {name} de {file_name.split('/')[-1]}"
             )
 
-            vtime, _ = [
+            vtime, *_ = [
                 x.flatten()
                 for x in np.meshgrid(
                     get_time(file_name), lats, lons, indexing="ij"
