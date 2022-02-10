@@ -1,3 +1,6 @@
+[tool.black]
+line-length = 80
+
 [tool.poetry]
 name = "CempaNetcdf2Postgis"
 version = "0.1.0"
@@ -17,12 +20,16 @@ SQLAlchemy = "^1.4.31"
 loguru = "^0.5.3"
 GeoAlchemy2 = "^0.10.2"
 psycopg2 = "^2.9.3"
+seaborn = "^0.11.2"
+Jinja2 = "^3.0.3"
+rasterio = "^1.2.10"
 
 [tool.poetry.dev-dependencies]
 black = "^21.12b0"
 flake8 = "^4.0.1"
 isort = "^5.10.1"
 mypy = "^0.931"
+ipython = "^8.0.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
