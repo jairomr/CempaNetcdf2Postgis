@@ -4,12 +4,7 @@ from netCDF4 import Dataset
 
 from cempa.config import is_goias, lats, logger, lons, ormdtype, settings
 from cempa.db import engine
-from cempa.functions import (
-    exists_in_the_bank,
-    get_list_nc,
-    get_time,
-    save_hash,
-)
+from cempa.functions import exists_in_the_bank, get_list_nc, get_time, save_hash
 from cempa.hash import data_frame2hash, generate_file_md5
 from cempa.netCDFtoTIFF import nc2tiff
 

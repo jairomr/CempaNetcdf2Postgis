@@ -25,7 +25,9 @@ def creat_map_file(file_name, coll_name, min_max=False, geotiff=False):
                 .to_dict()
             )
             logger.info(
-                f"Creating table layer '{row['table_name']}' from variable '{row['coll_table']}'"
+                "Creating layer '{}' from variable '{}'".format(
+                    row["table_name"], row["coll_table"]
+                )
             )
             _minmax = get_min_max(row.coll_table, row.table_name)
         except:
@@ -38,7 +40,7 @@ def creat_map_file(file_name, coll_name, min_max=False, geotiff=False):
         if geotiff:
             row["coll_view"] = "pixel"
             row["file_name"] = file_name
-        if not min_max == False:
+        if not (min_max is False):
             _minmax = min_max
         try:
             file_object.write(
@@ -67,7 +69,9 @@ def creat_by_bd():
             try:
                 row = row[0]
                 logger.info(
-                    f"Creating table layer '{row.table_name}' from variable '{row.coll_table}'"
+                    "Creating layer '{}' from variable '{}'".format(
+                        row["table_name"], row["coll_table"]
+                    )
                 )
                 file_object.write(
                     template.render(
