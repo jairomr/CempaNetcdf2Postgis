@@ -1,8 +1,12 @@
 [tool.black]
 line-length = 80
 
+[tool.isort]
+profile = 'black'
+
+
 [tool.poetry]
-name = "CempaNetcdf2Postgis"
+name = "cempa"
 version = "0.1.0"
 description = ""
 authors = ["Rocha, Jairo <devjairomr@gmail.com>"]
