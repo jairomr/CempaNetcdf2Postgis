@@ -7,7 +7,6 @@ import numpy as np
 import pandas as pd
 import rasterio
 from matplotlib.tri import LinearTriInterpolator, Triangulation
-from rasterio.crs import CRS
 from rasterio.transform import Affine
 
 from cempa.config import lats, logger, lons, settings
