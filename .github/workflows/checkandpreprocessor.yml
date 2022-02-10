@@ -1,0 +1,27 @@
+name: Check and preprocessor
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install Poetry
+      uses: GrlN/setup-poetry@v4
+
+    - name: Install dependencies
+      run: poetry install
+
+    - name: Execut Black
+      run: poetry run black scr --check
+
+    - name: Execut isort
+      run: poetry run isort --check scr
+
+    - name: Create requirements.txt
+      run: poetry export -f requirements.txt --output requirements.txt
