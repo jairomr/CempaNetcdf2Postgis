@@ -18,10 +18,10 @@ jobs:
       run: poetry install
 
     - name: Execut Black
-      run: poetry run black scr --check
+      run: poetry run black src --check
 
     - name: Execut isort
-      run: poetry run isort --check scr
+      run: poetry run isort --check src
 
     - name: Create requirements.txt
       run: poetry export -f requirements.txt --output requirements.txt
