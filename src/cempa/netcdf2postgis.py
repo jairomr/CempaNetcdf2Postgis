@@ -72,9 +72,7 @@ def main() -> None:
     for file in get_list_nc(settings.FILES_NC):
         logger.info(file)
         file_hash = generate_file_md5(file)
-        if (not exists_in_the_bank(file_hash)) and (
-            not settings.IGNOREHASHFILE
-        ):
+        if (not exists_in_the_bank(file_hash)) or settings.IGNOREHASHFILE:
             rootgrp = Dataset(file)
             if not netcsf2sql(file, rootgrp):
                 save_hash(file_hash)
