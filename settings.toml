@@ -8,5 +8,5 @@ vars = ['albedt','tempc','ue_avg','ve_avg',
 DBLINK = 'sqlite:////data.bd'
 rasterRes = 0.001
 
-
+IGNOREHASHFILE = false
 forceCreateFiles = false
