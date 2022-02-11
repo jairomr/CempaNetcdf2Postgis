@@ -6,7 +6,7 @@ vars = ['albedt','tempc','ue_avg','ve_avg',
 'sfc_press','sea_press','t2mj','td2mj','u10mj',
 'v10mj','le','h','rshort','rlong','rlongup']
 DBLINK = 'sqlite:////data.bd'
-rasterRes = 0.001
+rasterRes = 0.01
 
 IGNOREHASHFILE = false
 forceCreateFiles = false
