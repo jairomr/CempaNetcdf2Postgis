@@ -18,7 +18,7 @@ LAYER
     TEMPLATE "DUMMY"
     {% else %}
     CONNECTIONTYPE POSTGIS
-    CONNECTION "host=172.18.0.4 port=5432 dbname=cempa user=cempa-lapig password=6!#XkLjZevL6"
+    CONNECTION "host={{host}} port={{port}} dbname={{dbname}} user={{user}} password={{password}}"
     DATA "geom from (select * from {{view_name}} where %MSFILTER% ) as subquery using unique gid using srid=4674"
     EXTENT  -53.251209334 -19.499150809 -45.9069681829999 -12.3952103039999
     PROCESSING "CLOSE_CONNECTION=DEFER"
