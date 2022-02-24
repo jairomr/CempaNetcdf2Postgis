@@ -1,0 +1,54 @@
+LAYER
+    NAME "{{view_name}}"
+    {% if geotiff %}
+    DATA "{{file_name}}"
+    EXTENT  -53.251209334 -19.499150809 -45.9069681829999 -12.3952103039999
+    METADATA
+      "ows_title" "{{ows_title}}"
+      "ows_abstract" "{{ows_abstract}}"
+      "gml_exclude_items" "the_geom"
+      "gml_include_items" "all"
+      "gml_geometries"  "the_geom"
+    END
+    PROJECTION
+      "init=epsg:4674"
+    END
+    STATUS ON
+    TYPE Raster
+    TEMPLATE "DUMMY"
+    {% else %}
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "host=172.18.0.4 port=5432 dbname=cempa user=cempa-lapig password=6!#XkLjZevL6"
+    DATA "geom from (select * from {{view_name}} where %MSFILTER% ) as subquery using unique gid using srid=4674"
+    EXTENT  -53.251209334 -19.499150809 -45.9069681829999 -12.3952103039999
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    METADATA
+      "ows_title" "{{ows_title}}"
+      "ows_abstract" "{{ows_abstract}}"
+      "gml_exclude_items" "geom"
+      "gml_include_items" "all"
+      "gml_geometries"  "geom"
+    END
+    PROJECTION
+      "init=epsg:4674"
+    END
+    STATUS ON
+    TYPE Point
+    TEMPLATE "DUMMY"
+    VALIDATION 
+      "MSFILTER" "." 
+      "DEFAULT_MSFILTER" "datetime = (select min(datetime) from {{table_name}})"
+    END
+    {% endif %}
+{% for style in styles %}
+    CLASS
+      NAME "{{ "%.2f"|format(style['min']) }} - {{ "%.2f"|format(style['max']) }} {{metrica}}"
+      EXPRESSION ([{{coll_view}}] >= {{style['min']}} AND [{{coll_view}}] < {{style['max']}})
+      STYLE
+        SYMBOL "square"
+        SIZE 10
+        COLOR "{{style['color']}}"
+      END
+    END{% endfor %}
+END
+
