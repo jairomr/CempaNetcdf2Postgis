@@ -8,13 +8,13 @@ from cempa.model import StyleMap
 
 
 def creat_map_file(file_name, coll_name, min_max=False, geotiff=False):
-    logger.info("Criando o .map para o tiff")
+    logger.info('Criando o .map para o tiff')
     env = Environment(
-        loader=PackageLoader("generatmap"), autoescape=select_autoescape()
+        loader=PackageLoader('generatmap'), autoescape=select_autoescape()
     )
 
-    with open(file_name.replace(".tif", ".map"), "w") as file_object:
-        template = env.get_template("cempa.map")
+    with open(file_name.replace('.tif', '.map'), 'w') as file_object:
+        template = env.get_template('cempa.map')
         row = {}
         try:
             row = (
@@ -26,20 +26,20 @@ def creat_map_file(file_name, coll_name, min_max=False, geotiff=False):
             )
             logger.info(
                 "Creating layer '{}' from variable '{}'".format(
-                    row["table_name"], row["coll_table"]
+                    row['table_name'], row['coll_table']
                 )
             )
             _minmax = get_min_max(row.coll_table, row.table_name)
         except:
-            logger.info("Gerando .map com dados padrao")
-            row["view_name"] = f"{coll_name}_geotiff"
-            row["ows_title"] = coll_name
-            row["ows_abstract"] = coll_name
-            row["palette"] = "magma"
-        row["geotiff"] = geotiff
+            logger.info('Gerando .map com dados padrao')
+            row['view_name'] = f'{coll_name}_geotiff'
+            row['ows_title'] = coll_name
+            row['ows_abstract'] = coll_name
+            row['palette'] = 'magma'
+        row['geotiff'] = geotiff
         if geotiff:
-            row["coll_view"] = "pixel"
-            row["file_name"] = file_name
+            row['coll_view'] = 'pixel'
+            row['file_name'] = file_name
         if not (min_max is False):
             _minmax = min_max
         try:
@@ -47,37 +47,37 @@ def creat_map_file(file_name, coll_name, min_max=False, geotiff=False):
                 template.render(
                     {
                         **row,
-                        "styles": get_pallet(
+                        'styles': get_pallet(
                             *_minmax,
-                            row["palette"],
+                            row['palette'],
                         ),
                     }
                 )
             )
         except:
-            logger.exception("Error")
+            logger.exception('Error')
 
 
 def creat_by_bd():
     env = Environment(
-        loader=PackageLoader("generatmap"), autoescape=select_autoescape()
+        loader=PackageLoader('generatmap'), autoescape=select_autoescape()
     )
 
-    with open(settings.MAPFILE, "w") as file_object:
-        template = env.get_template("cempa.map")
+    with open(settings.MAPFILE, 'w') as file_object:
+        template = env.get_template('cempa.map')
         for row in session.execute(select(StyleMap)).all():
             try:
                 row = row[0]
                 logger.info(
                     "Creating layer '{}' from variable '{}'".format(
-                        row["table_name"], row["coll_table"]
+                        row['table_name'], row['coll_table']
                     )
                 )
                 file_object.write(
                     template.render(
                         {
                             **row.to_dict(),
-                            "styles": get_pallet(
+                            'styles': get_pallet(
                                 *get_min_max(row.coll_table, row.table_name),
                                 row.palette,
                             ),
@@ -85,4 +85,4 @@ def creat_by_bd():
                     )
                 )
             except:
-                logger.exception("Error")
+                logger.exception('Error')
