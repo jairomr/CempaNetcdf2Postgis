@@ -8,7 +8,7 @@ from cempa.db import Base, engine, session
 
 
 class StyleMap(Base):
-    __tablename__ = "stylemap"
+    __tablename__ = 'stylemap'
     id = Column(Integer, primary_key=True)
     table_name = Column(String)
     coll_table = Column(String)
@@ -31,16 +31,16 @@ class StyleMap(Base):
 
 
 class FileHash(Base):
-    __tablename__ = "files_hashs"
+    __tablename__ = 'files_hashs'
     id = Column(Integer, primary_key=True)
     file_hash = Column(String)
     datetime = Column(DateTime, default=datetime.now, index=True)
 
 
 class Points(Base):
-    __tablename__ = "points"
+    __tablename__ = 'points'
     gid = Column(Integer, primary_key=True)
-    geom = Column(Geometry("POINT", 4674), index=True)
+    geom = Column(Geometry('POINT', 4674), index=True)
     lat = Column(Float)
     lon = Column(Float)
     uf = Column(String(4), index=True)
@@ -52,15 +52,15 @@ class Points(Base):
 
 
 class CempaALBEDT(Base):
-    __tablename__ = "albedt"
+    __tablename__ = 'albedt'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     albedt = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaTEMPC(Base):
-    __tablename__ = "tempc"
+    __tablename__ = 'tempc'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     tempc_01 = Column(Float)
@@ -82,11 +82,11 @@ class CempaTEMPC(Base):
     tempc_17 = Column(Float)
     tempc_18 = Column(Float)
     tempc_19 = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaUE_AVG(Base):
-    __tablename__ = "ue_avg"
+    __tablename__ = 'ue_avg'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     ue_avg_01 = Column(Float)
@@ -108,11 +108,11 @@ class CempaUE_AVG(Base):
     ue_avg_17 = Column(Float)
     ue_avg_18 = Column(Float)
     ue_avg_19 = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaVE_AVG(Base):
-    __tablename__ = "ve_avg"
+    __tablename__ = 've_avg'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     ve_avg_01 = Column(Float)
@@ -134,11 +134,11 @@ class CempaVE_AVG(Base):
     ve_avg_17 = Column(Float)
     ve_avg_18 = Column(Float)
     ve_avg_19 = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaW(Base):
-    __tablename__ = "w"
+    __tablename__ = 'w'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     w_01 = Column(Float)
@@ -160,11 +160,11 @@ class CempaW(Base):
     w_17 = Column(Float)
     w_18 = Column(Float)
     w_19 = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaRH(Base):
-    __tablename__ = "rh"
+    __tablename__ = 'rh'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     rh_01 = Column(Float)
@@ -186,11 +186,11 @@ class CempaRH(Base):
     rh_17 = Column(Float)
     rh_18 = Column(Float)
     rh_19 = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaGEO(Base):
-    __tablename__ = "geo"
+    __tablename__ = 'geo'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     geo_01 = Column(Float)
@@ -212,11 +212,11 @@ class CempaGEO(Base):
     geo_17 = Column(Float)
     geo_18 = Column(Float)
     geo_19 = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaCLOUD(Base):
-    __tablename__ = "cloud"
+    __tablename__ = 'cloud'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     cloud_01 = Column(Float)
@@ -238,111 +238,111 @@ class CempaCLOUD(Base):
     cloud_17 = Column(Float)
     cloud_18 = Column(Float)
     cloud_19 = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaPRECIP(Base):
-    __tablename__ = "precip"
+    __tablename__ = 'precip'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     precip = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaACCCON(Base):
-    __tablename__ = "acccon"
+    __tablename__ = 'acccon'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     acccon = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaSFC_PRESS(Base):
-    __tablename__ = "sfc_press"
+    __tablename__ = 'sfc_press'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     sfc_press = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaSEA_PRESS(Base):
-    __tablename__ = "sea_press"
+    __tablename__ = 'sea_press'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     sea_press = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaT2MJ(Base):
-    __tablename__ = "t2mj"
+    __tablename__ = 't2mj'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     t2mj = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaTD2MJ(Base):
-    __tablename__ = "td2mj"
+    __tablename__ = 'td2mj'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     td2mj = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaU10MJ(Base):
-    __tablename__ = "u10mj"
+    __tablename__ = 'u10mj'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     u10mj = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaV10MJ(Base):
-    __tablename__ = "v10mj"
+    __tablename__ = 'v10mj'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     v10mj = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaLE(Base):
-    __tablename__ = "le"
+    __tablename__ = 'le'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     le = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaH(Base):
-    __tablename__ = "h"
+    __tablename__ = 'h'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     h = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaRSHORT(Base):
-    __tablename__ = "rshort"
+    __tablename__ = 'rshort'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     rshort = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaRLONG(Base):
-    __tablename__ = "rlong"
+    __tablename__ = 'rlong'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     rlong = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 class CempaRLONGUP(Base):
-    __tablename__ = "rlongup"
+    __tablename__ = 'rlongup'
     gid = Column(Integer, primary_key=True)
     datetime = Column(DateTime, index=True)
     rlongup = Column(Float)
-    point_gid = Column(Integer, ForeignKey("points.gid"))
+    point_gid = Column(Integer, ForeignKey('points.gid'))
 
 
 Base.metadata.create_all(engine)
