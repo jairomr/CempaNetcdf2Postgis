@@ -2,7 +2,7 @@
 line-length = 80
 
 [tool.isort]
-profile = 'black'
+line_length = 81
 
 
 [tool.poetry]
@@ -13,7 +13,7 @@ authors = ["Rocha, Jairo <devjairomr@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.9.10"
 geopandas = "^0.10.2"
 netCDF4 = "^1.5.8"
 pandas = "^1.4.0"
@@ -28,12 +28,13 @@ seaborn = "^0.11.2"
 Jinja2 = "^3.0.3"
 rasterio = "^1.2.10"
 
-[tool.poetry.dev-dependencies]
-black = "^21.12b0"
-flake8 = "^4.0.1"
-isort = "^5.10.1"
-mypy = "^0.931"
+[tool.poetry.dev-dependencies]  
 ipython = "^8.0.1"
+prospector = "^1.6.0"
+blue = "^0.7.0"
+pytest = "^7.0.1"
+isort = "^5.10.1"
+pip-audit = "^1.1.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
