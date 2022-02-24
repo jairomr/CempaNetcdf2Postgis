@@ -15,34 +15,34 @@ from generatmap.map import creat_map_file
 
 
 def nc2tiff(name, var, coll_name, file_name):
-    path_level1 = f"{settings.DIRMAP}/{get_time(file_name,True)}"
+    path_level1 = f'{settings.DIRMAP}/{get_time(file_name,True)}'
     if not isdir(path_level1):
         os.mkdir(path_level1)
-    if not isdir(f"{path_level1}/{name}"):
-        os.mkdir(f"{path_level1}/{name}")
-    name_tif = f"{path_level1}/{name}/{coll_name}.tif"
-    name_map = f"{path_level1}/{name}/{coll_name}.map"
+    if not isdir(f'{path_level1}/{name}'):
+        os.mkdir(f'{path_level1}/{name}')
+    name_tif = f'{path_level1}/{name}/{coll_name}.tif'
+    name_map = f'{path_level1}/{name}/{coll_name}.map'
     if (
         isfile(name_tif)
-        and isfile(f"{name_map}")
+        and isfile(f'{name_map}')
         and not settings.forceCreateFiles
     ):
-        logger.info("Tiff e map ja foi gerado")
+        logger.info('Tiff e map ja foi gerado')
         return None
     start_time = time()
     logger.info(
-        f"Criando tiff /{get_time(file_name,True)}/{name}/{coll_name}.tif"
+        f'Criando tiff /{get_time(file_name,True)}/{name}/{coll_name}.tif'
     )
     vtime, latitudes_grid, longitudes_grid = [
         x.flatten()
-        for x in np.meshgrid(get_time(file_name), lats, lons, indexing="ij")
+        for x in np.meshgrid(get_time(file_name), lats, lons, indexing='ij')
     ]
     tmp_var = var
     data = {
-        "date_time": vtime,
-        "lat": latitudes_grid,
-        "lon": longitudes_grid,
-        f"{name}": tmp_var,
+        'date_time': vtime,
+        'lat': latitudes_grid,
+        'lon': longitudes_grid,
+        f'{name}': tmp_var,
     }
     temp_df = pd.DataFrame(data)
     min_max = (
@@ -102,18 +102,18 @@ def nc2tiff(name, var, coll_name, file_name):
 
     triInterpRaster = rasterio.open(
         name_tif,
-        "w",
-        driver="GTiff",
+        'w',
+        driver='GTiff',
         height=zCoords.shape[0],
         width=zCoords.shape[1],
         count=1,
         dtype=zCoords.dtype,
         # crs='+proj=latlong',
-        crs={"init": "epsg:4674"},
+        crs={'init': 'epsg:4674'},
         transform=transform,
     )
     triInterpRaster.write(zCoords, 1)
     triInterpRaster.close()
     creat_map_file(name_tif, coll_name, min_max=min_max, geotiff=True)
-    logger.info(f"Tempo de crianção para tif e map: {time() - start_time}s")
+    logger.info(f'Tempo de crianção para tif e map: {time() - start_time}s')
     return None
