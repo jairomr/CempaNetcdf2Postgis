@@ -6,7 +6,7 @@ from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import DateTime, Float, Integer, String
 from sqlalchemy import delete
 
-from cempa.db import Base, engine, session
+from cempa.db import Base, engine, create_session
 
 
 class StyleMap(Base):
@@ -375,5 +375,6 @@ def clear_tables():
         CempaRLONGUP,
     ]
     for table in talbes:
+        session = create_session()
         session.execute(delete(table).where(table.gid > 0))
         session.commit()

@@ -6,7 +6,8 @@ from os.path import isdir
 import seaborn as sns
 from sqlalchemy import select
 
-from cempa.model import FileHash, session
+from cempa.model import FileHash
+from cempa.db import create_session
 
 
 def get_time(name: str, return_txt=False) -> str:
@@ -33,6 +34,7 @@ def get_min_max(coll_table, table_name):
 
 
 def exists_in_the_bank(file_hash: str) -> bool:
+    session = create_session()
     is_valid = session.execute(
         select(FileHash).where(FileHash.file_hash == file_hash)
     )
@@ -42,6 +44,7 @@ def exists_in_the_bank(file_hash: str) -> bool:
 
 
 def save_hash(str_hash: str) -> None:
+    session = create_session()
     session.add(FileHash(file_hash=str_hash))
     session.commit()
 

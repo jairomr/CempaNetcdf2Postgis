@@ -2,7 +2,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from sqlalchemy import select
 
 from cempa.config import logger, settings
-from cempa.db import session
+from cempa.db import create_session
 from cempa.functions import get_min_max, get_pallet
 from cempa.model import StyleMap
 
@@ -17,6 +17,7 @@ def creat_map_file(file_name, coll_name, min_max=False, geotiff=False):
         template = env.get_template('cempa.map')
         row = {}
         try:
+            session = create_session()
             row = (
                 session.execute(
                     select(StyleMap).where(StyleMap.coll_table == coll_name)
@@ -70,6 +71,7 @@ def creat_by_bd():
 
     with open(settings.MAPFILE, 'w') as file_object:
         template = env.get_template('cempa.map')
+        session = create_session()
         for row in session.execute(select(StyleMap)).all():
             try:
                 row = row[0]

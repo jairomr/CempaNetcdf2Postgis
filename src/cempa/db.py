@@ -6,5 +6,7 @@ from cempa.config import settings
 
 Base = declarative_base()
 engine = create_engine(settings.dblink)
-Session = sessionmaker(bind=engine)
-session = Session()
+
+def create_session():
+    Session = sessionmaker(bind=engine)
+    return Session()
