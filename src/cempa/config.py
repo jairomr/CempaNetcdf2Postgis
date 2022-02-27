@@ -4,7 +4,11 @@ from dynaconf import Dynaconf
 from loguru import logger
 from pandas import read_csv
 
-logger.add('../sys.log', rotation='500 MB')
+logger.add(
+    '../sys.log',
+    format='{time}--{process.id} {level} {module}.{function} {message}',
+    rotation='500 MB',
+)
 
 
 settings = Dynaconf(

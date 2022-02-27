@@ -1,5 +1,8 @@
+from multiprocessing import Pool
+
 import numpy as np
 import pandas as pd
+import xarray as xr
 from netCDF4 import Dataset
 
 from cempa.config import is_goias, lats, logger, lons, ormdtype, settings
@@ -15,7 +18,16 @@ from cempa.functions import (  # isort:skip
 )
 
 
-def netcsf2sql(file_name: str, rootgrp: Dataset) -> bool:
+def netcsf2sql(file_name: str, rootgrp: Dataset, xr_file):
+    """_summary_
+
+    Args:
+        file_name (str): _description_
+        rootgrp (Dataset): _description_
+
+    Returns:
+        bool: _description_
+    """
     error = False
     for name in settings.vars:
         try:
@@ -34,10 +46,10 @@ def netcsf2sql(file_name: str, rootgrp: Dataset) -> bool:
             if len(np.squeeze(tempc)) == 19:
                 for c, var in enumerate(np.squeeze(tempc), 1):
                     camadas[f'{name}_{c:02}'] = var.flatten()
-                    nc2tiff(name, var.flatten(), f'{name}_{c:02}', file_name)
+                    nc2tiff(xr_file, name, f'{name}_{c:02}', file_name, c - 1)
             else:
                 camadas = {f'{name}': np.squeeze(tempc).flatten()}
-                nc2tiff(name, np.squeeze(tempc).flatten(), name, file_name)
+                nc2tiff(xr_file, name, name, file_name)
             temp_df = pd.DataFrame(
                 {
                     'datetime': vtime,
@@ -52,7 +64,7 @@ def netcsf2sql(file_name: str, rootgrp: Dataset) -> bool:
 
             df_hash = data_frame2hash(name, temp_df)
 
-            if not exists_in_the_bank(df_hash):
+            if not exists_in_the_bank(df_hash) or settings.FORCE_SAVE_BD:
                 logger.info(
                     f"salvando no banco {file_name.split('/')[0]} {name}"
                 )
@@ -74,18 +86,40 @@ def netcsf2sql(file_name: str, rootgrp: Dataset) -> bool:
     return error
 
 
-def main() -> None:
-    for file in get_list_nc(settings.FILES_NC):
-        logger.info(file)
-        file_hash = generate_file_md5(file)
-        if (not exists_in_the_bank(file_hash)) or settings.IGNOREHASHFILE:
-            rootgrp = Dataset(file)
-            if not netcsf2sql(file, rootgrp):
-                save_hash(file_hash)
-            else:
-                logger.warning('Teve error')
+def load_file(file):
+    """_summary_
+
+    Args:
+        file (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    logger.info(file)
+    file_hash = generate_file_md5(file)
+    if (not exists_in_the_bank(file_hash)) or settings.IGNOREHASHFILE:
+        rootgrp = Dataset(file)
+        xr_file = xr.open_dataset(file)
+        if not netcsf2sql(file, rootgrp, xr_file):
+            save_hash(file_hash)
+            return {'file': file, 'status': 'sucesso'}
         else:
-            logger.info('File ja foi salvo no banco')
+            logger.warning('Teve error')
+            return {'file': file, 'status': 'error'}
+    else:
+        logger.info('File ja foi salvo no banco')
+        return {
+            'file': file,
+            'status': 'sucesso',
+            'mensagem': 'Ja foi salvo no banco',
+        }
+
+
+def main():
+    """_summary_"""
+    with Pool(15) as workers:
+        result = workers.map(load_file, get_list_nc(settings.FILES_NC))
+    logger.info(result)
 
 
 if __name__ == '__main__':

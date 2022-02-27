@@ -2,6 +2,7 @@
 
 install:
 	@poetry install
+	@poetry export -f requirements.txt --output requirements.txt
 format:
 	@poetry run isort .
 	@poetry run blue .

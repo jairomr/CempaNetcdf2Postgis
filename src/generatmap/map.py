@@ -46,11 +46,11 @@ def creat_map_file(file_name, coll_name, min_max=False, geotiff=False):
             file_object.write(
                 template.render(
                     {
-                        'host':settings.dbmap_host,
-                        'port':settings.dbmap_port,
-                        'dbname':settings.dbmap_dbname,
-                        'user':settings.dbmap_user,
-                        'password':settings.dbmap_password,
+                        'host': settings.dbmap_host,
+                        'port': settings.dbmap_port,
+                        'dbname': settings.dbmap_dbname,
+                        'user': settings.dbmap_user,
+                        'password': settings.dbmap_password,
                         **row,
                         'styles': get_pallet(
                             *_minmax,
@@ -81,7 +81,6 @@ def creat_by_bd():
                 file_object.write(
                     template.render(
                         {
-                            
                             **row.to_dict(),
                             'styles': get_pallet(
                                 *get_min_max(row.coll_table, row.table_name),

@@ -1,5 +1,7 @@
+import os
 from datetime import datetime
 from glob import glob
+from os.path import isdir
 
 import seaborn as sns
 from sqlalchemy import select
@@ -16,7 +18,7 @@ def get_time(name: str, return_txt=False) -> str:
     return str(datetime.strptime(date_time_str, '%Y-%m-%d-%H%M%S'))
 
 
-def get_list_nc(path_files: str) -> list:
+def get_list_nc(path_files: str):
     return glob(f'{path_files}/*.nc')
 
 
@@ -55,3 +57,10 @@ def get_pallet(_min, _max, color_name='magma', n_class=25):
             sns.color_palette(color_name, n_colors=n_class).as_hex()
         )
     ]
+
+
+def create_folder_for_tiffs(path_level1, name):
+    if not isdir(path_level1):
+        os.mkdir(path_level1)
+    if not isdir(f'{path_level1}/{name}'):
+        os.mkdir(f'{path_level1}/{name}')
