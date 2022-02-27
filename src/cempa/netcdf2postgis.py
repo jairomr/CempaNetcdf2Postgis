@@ -1,4 +1,5 @@
 from multiprocessing import Pool
+from turtle import settiltangle
 
 import numpy as np
 import pandas as pd
@@ -117,7 +118,7 @@ def load_file(file):
 
 def main():
     """_summary_"""
-    with Pool(15) as workers:
+    with Pool(settings.N_POOL) as workers:
         result = workers.map(load_file, get_list_nc(settings.FILES_NC))
     logger.info(result)
 

@@ -1,6 +1,7 @@
 MAPFILE = "teste.map"
 DIRMAP = "/Volumes/backup/ufg/cempa/maps"
 FILES_NC = "/Volumes/backup/dowloads/2022011200"
+N_POOL = 10
 vars = ['albedt','tempc','ue_avg','ve_avg',
 'w','rh','geo','cloud','precip','acccon',
 'sfc_press','sea_press','t2mj','td2mj','u10mj',
