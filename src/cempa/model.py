@@ -1,8 +1,10 @@
 from datetime import datetime
 
 from geoalchemy2 import Geometry
+from numpy import delete
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import DateTime, Float, Integer, String
+from sqlalchemy import delete
 
 from cempa.db import Base, engine, session
 
@@ -350,33 +352,28 @@ Base.metadata.create_all(engine)
 
 def clear_tables():
     talbes = [
-        CempaALBEDT.__table__,
-        CempaTEMPC.__table__,
-        CempaUE_AVG.__table__,
-        CempaVE_AVG.__table__,
-        CempaW.__table__,
-        CempaRH.__table__,
-        CempaGEO.__table__,
-        CempaCLOUD.__table__,
-        CempaPRECIP.__table__,
-        CempaACCCON.__table__,
-        CempaSFC_PRESS.__table__,
-        CempaSEA_PRESS.__table__,
-        CempaT2MJ.__table__,
-        CempaTD2MJ.__table__,
-        CempaU10MJ.__table__,
-        CempaV10MJ.__table__,
-        CempaLE.__table__,
-        CempaH.__table__,
-        CempaRSHORT.__table__,
-        CempaRLONG.__table__,
-        CempaRLONGUP.__table__,
+        CempaALBEDT,
+        CempaTEMPC,
+        CempaUE_AVG,
+        CempaVE_AVG,
+        CempaW,
+        CempaRH,
+        CempaGEO,
+        CempaCLOUD,
+        CempaPRECIP,
+        CempaACCCON,
+        CempaSFC_PRESS,
+        CempaSEA_PRESS,
+        CempaT2MJ,
+        CempaTD2MJ,
+        CempaU10MJ,
+        CempaV10MJ,
+        CempaLE,
+        CempaH,
+        CempaRSHORT,
+        CempaRLONG,
+        CempaRLONGUP,
     ]
-    Base.metadata.drop_all(
-        engine,
-        talbes,
-    )
-    Base.metadata.create_all(
-        engine,
-        talbes,
-    )
+    for table in talbes:
+        session.execute(delete(table).where(table.gid > 0))
+        session.commit()

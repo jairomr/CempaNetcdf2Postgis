@@ -20,7 +20,7 @@ initial_config = Dynaconf(
 @click.option('--force_save_bd/--no-force_save_bd', default=False)
 def cli_main(path, clear, force_save_bd):
     if clear:
-        clear_tables()
+        print(clear_tables())
         path = initial_config.DIRMAP
         if isdir(path):
             rmtree(path)
