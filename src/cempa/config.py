@@ -10,6 +10,13 @@ logger.add(
     rotation='500 MB',
 )
 
+logger.add(
+    '../syserror.log',
+    format='{time}--{process.id} {level} {module}.{function} {message}',
+    rotation='500 MB',
+    level="WARNING"
+)
+
 
 settings = Dynaconf(
     envvar_prefix='CEMPA',
