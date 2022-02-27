@@ -33,14 +33,18 @@ def get_min_max(coll_table, table_name):
         return (0, 1)
 
 
-def exists_in_the_bank(file_hash: str) -> bool:
+def exists_in_the_bank(file_hash: str):
     session = create_session()
-    is_valid = session.execute(
-        select(FileHash).where(FileHash.file_hash == file_hash)
-    )
-    if len(is_valid.fetchall()) > 0:
+    try:
+        is_valid = session.execute(
+            select(FileHash).where(FileHash.file_hash == file_hash)
+        )
+        if len(is_valid.fetchall()) > 0:
+            return True
+        return False
+    except:
+        logger.exception('Error exists_in_the_bank')
         return True
-    return False
 
 
 def save_hash(str_hash: str) -> None:
