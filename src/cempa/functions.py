@@ -9,6 +9,8 @@ from sqlalchemy import select
 from cempa.model import FileHash
 from cempa.db import create_session
 
+from cempa.config import logger
+
 
 def get_time(name: str, return_txt=False) -> str:
     date_time_str = (
