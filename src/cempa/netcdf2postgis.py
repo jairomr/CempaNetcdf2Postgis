@@ -19,7 +19,7 @@ from cempa.functions import (  # isort:skip
 )
 
 
-def netcsf2sql(file_name: str, rootgrp: Dataset, xr_file):
+def netcsf2sql(file_name: str, rootgrp: Dataset, xr_file, force_save_db):
     """_summary_
 
     Args:
@@ -65,7 +65,7 @@ def netcsf2sql(file_name: str, rootgrp: Dataset, xr_file):
 
             df_hash = data_frame2hash(name, temp_df)
 
-            if not exists_in_the_bank(df_hash) or settings.FORCE_SAVE_BD:
+            if not exists_in_the_bank(df_hash) or force_save_db:
                 logger.info(
                     f"salvando no banco {file_name.split('/')[0]} {name}"
                 )
@@ -88,7 +88,7 @@ def netcsf2sql(file_name: str, rootgrp: Dataset, xr_file):
     return error
 
 
-def load_file(file):
+def load_file(args):
     """_summary_
 
     Args:
@@ -97,12 +97,13 @@ def load_file(file):
     Returns:
         _type_: _description_
     """
-    logger.info(file)
+    file,force_save_db = args
+    logger.info(f'force = {force_save_db} in {file}')
     file_hash = generate_file_md5(file)
     if (not exists_in_the_bank(file_hash)) or settings.IGNOREHASHFILE:
         rootgrp = Dataset(file)
         xr_file = xr.open_dataset(file)
-        if not netcsf2sql(file, rootgrp, xr_file):
+        if not netcsf2sql(file, rootgrp, xr_file, force_save_db):
             save_hash(file_hash)
             return {'file': file, 'status': 'sucesso'}
         else:
@@ -117,13 +118,17 @@ def load_file(file):
         }
 
 
-def main():
+
+
+def main(force_save_db=False):
     """_summary_"""
     main_start = time()
+    
     with Pool(settings.N_POOL) as workers:
-        result = workers.map(load_file, get_list_nc(settings.FILES_NC))
+        result = workers.map(load_file, [(file, force_save_db) 
+                                         for file in get_list_nc(settings.FILES_NC)])
     logger.info(result)
-    logger.info(f'Numero de pool {settings.N_POOL} force_save = {settings.FORCE_SAVE_BD}')
+    logger.info(f'Numero de pool {settings.N_POOL} force_save = {force_save_db}')
     logger.info(f'tempo total = {time() - main_start}s')
 
 if __name__ == '__main__':
