@@ -20,18 +20,20 @@ initial_config = Dynaconf(
 @click.option('--clear/--no-clear', default=False)
 @click.option('--force_save_bd/--no-force_save_bd', default=False)
 def cli_main(path, clear, force_save_bd):
-    if clear:
-        clear_tables()
-        path = initial_config.DIRMAP
-        if isdir(path):
-            rmtree(path)
-        if not isdir(path):
-            mkdir(path)
+    
     if not path == '':
         environ['CEMPA_FILES_NC'] = f'{path}'
     environ['CEMPA_FORCE_SAVE_BD'] = str(force_save_bd).lower()
-    logger.info(f'Numero de pool {initial_config.N_POOL}')
-    main()
+    
+    if clear:
+        clear_tables()
+        my_dir = initial_config.DIRMAP
+        if isdir(my_dir):
+            rmtree(my_dir)
+        if not isdir(my_dir):
+            mkdir(my_dir)
+    logger.info(f'Numero de pool {initial_config.N_POOL} force_save = {initial_config.FORCE_SAVE_BD}')
+    #main()
 
 
 if __name__ == '__main__':
