@@ -42,7 +42,7 @@ def exists_in_the_bank(file_hash: str):
         if is_valid.file_hash == file_hash:
             return True
         return False
-    except NoneType:
+    except AttributeError:
         return False
     except:
         logger.exception('Error exists_in_the_bank')
