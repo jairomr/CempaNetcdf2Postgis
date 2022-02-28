@@ -30,7 +30,7 @@ def cli_main(path, clear, force_save_bd):
     if not path == '':
         environ['CEMPA_FILES_NC'] = f'{path}'
     environ['CEMPA_FORCE_SAVE_BD'] = str(force_save_bd).lower()
-    logger.info(f'Numero de pool {initial_config.N_POLL}')
+    logger.info(f'Numero de pool {initial_config.N_POOL}')
     main()
 
 
