@@ -7,6 +7,7 @@ from dynaconf import Dynaconf
 
 from cempa.model import clear_tables
 from cempa.netcdf2postgis import main
+from cempa.config import logger
 
 initial_config = Dynaconf(
     envvar_prefix='CEMPA',
@@ -20,7 +21,7 @@ initial_config = Dynaconf(
 @click.option('--force_save_bd/--no-force_save_bd', default=False)
 def cli_main(path, clear, force_save_bd):
     if clear:
-        print(clear_tables())
+        clear_tables()
         path = initial_config.DIRMAP
         if isdir(path):
             rmtree(path)
@@ -29,6 +30,7 @@ def cli_main(path, clear, force_save_bd):
     if not path == '':
         environ['CEMPA_FILES_NC'] = f'{path}'
     environ['CEMPA_FORCE_SAVE_BD'] = str(force_save_bd).lower()
+    logger.info(f'Numero de pool {initial_config.N_POLL}')
     main()
 
 
