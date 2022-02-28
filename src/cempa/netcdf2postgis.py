@@ -65,7 +65,7 @@ def netcsf2sql(file_name: str, rootgrp: Dataset, xr_file, force_save_db):
 
             df_hash = data_frame2hash(name, temp_df)
 
-            if not exists_in_the_bank(df_hash) or force_save_db:
+            if force_save_db or not exists_in_the_bank(df_hash):
                 logger.info(
                     f"salvando no banco {file_name.split('/')[0]} {name}"
                 )
@@ -127,7 +127,7 @@ def main(force_save_db=False):
     with Pool(settings.N_POOL) as workers:
         result = workers.map(load_file, [(file, force_save_db) 
                                          for file in get_list_nc(settings.FILES_NC)])
-    logger.info(result)
+    #logger.info(result)
     logger.info(f'Numero de pool {settings.N_POOL} force_save = {force_save_db}')
     logger.info(f'tempo total = {time() - main_start}s')
 
