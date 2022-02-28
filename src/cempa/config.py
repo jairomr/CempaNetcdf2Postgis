@@ -6,13 +6,13 @@ from pandas import read_csv
 
 logger.add(
     '../sys.log',
-    format='{time}--{process.id} {level} {module}.{function} {message}',
+    format='[{time} | {process.id} | {level: <8}] {module}.{function}:{line} {message}',
     rotation='500 MB',
 )
 
 logger.add(
     '../syserror.log',
-    format='{time}--{process.id} {level} {module}.{function} {message}',
+    format='[{time} | {process.id} | {level: <8}] {module}.{function}:{line} {message}',
     rotation='500 MB',
     level="WARNING"
 )
