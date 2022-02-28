@@ -7,7 +7,7 @@ import xarray as xr
 from netCDF4 import Dataset
 
 from cempa.config import is_goias, lats, logger, lons, ormdtype, settings
-from cempa.db import engine
+from cempa.db import engine, save_df_bd
 from cempa.hash import data_frame2hash, generate_file_md5
 from cempa.netCDFtoTIFF import nc2tiff
 
@@ -61,7 +61,7 @@ def netcsf2sql(file_name: str, rootgrp: Dataset, xr_file):
             )
             temp_df = temp_df.dropna(subset=['goias'])
             temp_df['datetime'] = pd.to_datetime(temp_df['datetime'])
-            temp_df = temp_df.drop(['goias'], axis=1).set_index('datetime')
+            temp_df = temp_df.drop(['goias'], axis=1)#.set_index('datetime')
 
             df_hash = data_frame2hash(name, temp_df)
 
@@ -71,14 +71,15 @@ def netcsf2sql(file_name: str, rootgrp: Dataset, xr_file):
                 )
 
                 try:
-                    temp_df.to_sql(
-                        name, engine, dtype=ormdtype[name], if_exists='append'
-                    )
+                    #temp_df.to_sql(
+                    #    name, engine, dtype=ormdtype[name], if_exists='append'
+                    #)
+                    save_df_bd(temp_df, name)
                     save_hash(df_hash)
 
                 except Exception:
                     error = True
-                    logger.exception('What?!')
+                    logger.exception('Erro ao salva no Banco?!')
             else:
                 logger.info('Ja tem no banco')
         except Exception:
