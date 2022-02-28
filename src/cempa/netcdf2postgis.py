@@ -1,5 +1,5 @@
 from multiprocessing import Pool
-from turtle import settiltangle
+from time import time
 
 import numpy as np
 import pandas as pd
@@ -118,10 +118,11 @@ def load_file(file):
 
 def main():
     """_summary_"""
+    main_start = time()
     with Pool(settings.N_POOL) as workers:
         result = workers.map(load_file, get_list_nc(settings.FILES_NC))
     logger.info(result)
-
+    logger.info(f'tempo total = {main_start - time()}s')
 
 if __name__ == '__main__':
     main()
