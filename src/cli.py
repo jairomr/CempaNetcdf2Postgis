@@ -33,7 +33,7 @@ def cli_main(path, clear, force_save_bd):
         if not isdir(my_dir):
             mkdir(my_dir)
     logger.info(f'Numero de pool {initial_config.N_POOL} force_save = {initial_config.FORCE_SAVE_BD}')
-    #main()
+    main()
 
 
 if __name__ == '__main__':

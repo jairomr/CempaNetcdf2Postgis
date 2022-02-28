@@ -123,6 +123,7 @@ def main():
     with Pool(settings.N_POOL) as workers:
         result = workers.map(load_file, get_list_nc(settings.FILES_NC))
     logger.info(result)
+    logger.info(f'Numero de pool {settings.N_POOL} force_save = {settings.FORCE_SAVE_BD}')
     logger.info(f'tempo total = {time() - main_start}s')
 
 if __name__ == '__main__':
