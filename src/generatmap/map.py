@@ -7,7 +7,7 @@ from cempa.functions import get_min_max, get_pallet
 from cempa.model import StyleMap
 
 
-def creat_map_file(file_name, coll_name, min_max=False, geotiff=False):
+def creat_map_file(file_name, coll_name, min_max=False, file_date='', geotiff=False):
     logger.info('Criando o .map para o tiff')
     env = Environment(
         loader=PackageLoader('generatmap'), autoescape=select_autoescape()
@@ -33,7 +33,7 @@ def creat_map_file(file_name, coll_name, min_max=False, geotiff=False):
             _minmax = get_min_max(row.coll_table, row.table_name)
         except:
             logger.info('Gerando .map com dados padrao')
-            row['view_name'] = f'{coll_name}_geotiff'
+            row['view_name'] = f'{coll_name}_{file_date}'
             row['ows_title'] = coll_name
             row['ows_abstract'] = coll_name
             row['palette'] = 'magma'

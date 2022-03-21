@@ -19,7 +19,8 @@ def nc2tiff(xr_file, name, coll_name, file_name, id_level=None):
     Returns:
         _type_: _description_
     """
-    path_level1 = f'{settings.DIRMAP}/{get_time(file_name,True)}'
+    file_date = get_time(file_name,True)
+    path_level1 = f'{settings.DIRMAP}/{file_date}'
     create_folder_for_tiffs(path_level1, name)
     name_tif = f'{path_level1}/{name}/{coll_name}.tif'
     name_map = f'{path_level1}/{name}/{coll_name}.map'
@@ -32,7 +33,7 @@ def nc2tiff(xr_file, name, coll_name, file_name, id_level=None):
         return None
     start_time = time()
     logger.info(
-        f'Criando tiff /{get_time(file_name,True)}/{name}/{coll_name}.tif'
+        f'Criando tiff /{file_date}/{name}/{coll_name}.tif'
     )
 
     raster = xr_file[name]
@@ -46,6 +47,6 @@ def nc2tiff(xr_file, name, coll_name, file_name, id_level=None):
     )
     raster.rio.set_crs('epsg:4674')
     raster.rio.to_raster(name_tif)
-    creat_map_file(name_tif, coll_name, min_max=min_max, geotiff=True)
+    creat_map_file(name_tif, coll_name, min_max=min_max, file_date=file_date, geotiff=True)
     logger.info(f'Tempo de crianção para tif e map: {time() - start_time}s')
     return None
