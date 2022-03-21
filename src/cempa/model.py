@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from geoalchemy2 import Geometry
-from numpy import delete
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import DateTime, Float, Integer, String
 from sqlalchemy import delete
@@ -375,6 +374,7 @@ def clear_tables():
         CempaRLONGUP,
     ]
     for table in talbes:
+        #TODO Deletar via trucade reset gid
         session = create_session()
         session.execute(delete(table).where(table.gid > 0))
         session.commit()

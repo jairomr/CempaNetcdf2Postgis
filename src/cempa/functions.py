@@ -4,7 +4,6 @@ from glob import glob
 from os.path import isdir
 
 import seaborn as sns
-from sqlalchemy import select
 
 from cempa.model import FileHash
 from cempa.db import create_session
