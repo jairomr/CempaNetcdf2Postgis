@@ -1,5 +1,7 @@
 from multiprocessing import Pool
 from time import time
+from glob import glob
+import shutil
 
 import numpy as np
 import pandas as pd
@@ -130,6 +132,12 @@ def main(force_save_db=False):
     #logger.info(result)
     logger.info(f'Numero de pool {settings.N_POOL} force_save = {force_save_db}')
     logger.info(f'tempo total = {time() - main_start}s')
+    logger.info(f'criando {settings.BIGTIFF}')
+    with open(settings.BIGTIFF,'wb') as wfd:
+        for file in glob(f'{settings.DIRMAP}/*/*/*.map'):
+            with open(file,'rb') as fd:
+                shutil.copyfileobj(fd, wfd)
+    
 
 if __name__ == '__main__':
     main()

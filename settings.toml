@@ -1,5 +1,6 @@
 MAPFILE = "teste.map"
 DIRMAP = "/Volumes/backup/ufg/cempa/maps"
+BIGTIFF = "/Volumes/backup/ufg/cempa/cempa_all_map.map"
 FILES_NC = "/Volumes/backup/dowloads/2022011200"
 N_POOL = 10
 vars = ['albedt','tempc','ue_avg','ve_avg',
