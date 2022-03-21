@@ -1,4 +1,4 @@
-.PHONY: install format lint test sec
+.PHONY: install format lint test sec run
 
 install:
 	@poetry install
@@ -12,5 +12,8 @@ lint:
 	@poetry run prospector --with-tool pep257 --doc-warning
 test:
 	@poetry run pytest -v
+run:
+	@cd src && python cli.py --clear --force_save_bd >> log.log
+	@cd ..
 sec:
 	@poetry run pip-audit
