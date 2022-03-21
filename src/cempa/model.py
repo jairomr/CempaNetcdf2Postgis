@@ -377,4 +377,5 @@ def clear_tables():
         #TODO Deletar via trucade reset gid
         session = create_session()
         session.execute(delete(table).where(table.gid > 0))
+        session.execute(f"ALTER SEQUENCE {table.__tablename__}_gid_seq RESTART WITH 1")
         session.commit()
