@@ -1,13 +1,15 @@
 from jinja2 import Environment, PackageLoader, select_autoescape
 from sqlalchemy import select
 
-from cempa.config import logger, settings
-from cempa.db import create_session
-from cempa.functions import get_min_max, get_pallet
 from cempa.model import StyleMap
+from cempa.util.config import logger, settings
+from cempa.util.db import create_session
+from cempa.util.functions import get_min_max, get_pallet
 
 
-def creat_map_file(file_name, coll_name, min_max=False, file_date='', geotiff=False):
+def creat_map_file(
+    file_name, coll_name, min_max=False, file_date='', geotiff=False
+):
     logger.info('Criando o .map para o tiff')
     env = Environment(
         loader=PackageLoader('generatmap'), autoescape=select_autoescape()

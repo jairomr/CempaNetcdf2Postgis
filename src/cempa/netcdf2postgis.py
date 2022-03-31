@@ -1,19 +1,19 @@
+import shutil
+from glob import glob
 from multiprocessing import Pool
 from time import time
-from glob import glob
-import shutil
 
 import numpy as np
 import pandas as pd
 import xarray as xr
 from netCDF4 import Dataset
 
-from cempa.config import is_goias, lats, logger, lons, ormdtype, settings
-from cempa.db import engine, save_df_bd
-from cempa.hash import data_frame2hash, generate_file_md5
 from cempa.netCDFtoTIFF import nc2tiff
+from cempa.util.config import is_goias, lats, logger, lons, ormdtype, settings
+from cempa.util.db import engine, save_df_bd
+from cempa.util.hash import data_frame2hash, generate_file_md5
 
-from cempa.functions import (  # isort:skip
+from cempa.util.functions import (  # isort:skip
     exists_in_the_bank,
     get_list_nc,
     get_time,
@@ -63,7 +63,7 @@ def netcsf2sql(file_name: str, rootgrp: Dataset, xr_file, force_save_db):
             )
             temp_df = temp_df.dropna(subset=['goias'])
             temp_df['datetime'] = pd.to_datetime(temp_df['datetime'])
-            temp_df = temp_df.drop(['goias'], axis=1)#.set_index('datetime')
+            temp_df = temp_df.drop(['goias'], axis=1)  # .set_index('datetime')
 
             df_hash = data_frame2hash(name, temp_df)
 
@@ -73,9 +73,9 @@ def netcsf2sql(file_name: str, rootgrp: Dataset, xr_file, force_save_db):
                 )
 
                 try:
-                    #temp_df.to_sql(
+                    # temp_df.to_sql(
                     #    name, engine, dtype=ormdtype[name], if_exists='append'
-                    #)
+                    # )
                     save_df_bd(temp_df, name)
                     save_hash(df_hash)
 
@@ -99,7 +99,7 @@ def load_file(args):
     Returns:
         _type_: _description_
     """
-    file,force_save_db = args
+    file, force_save_db = args
     logger.info(f'force = {force_save_db} in {file}')
     file_hash = generate_file_md5(file)
     if (not exists_in_the_bank(file_hash)) or settings.IGNOREHASHFILE:
@@ -120,24 +120,26 @@ def load_file(args):
         }
 
 
-
-
 def main(force_save_db=False):
     """_summary_"""
     main_start = time()
-    
+
     with Pool(settings.N_POOL) as workers:
-        result = workers.map(load_file, [(file, force_save_db) 
-                                         for file in get_list_nc(settings.FILES_NC)])
-    #logger.info(result)
-    logger.info(f'Numero de pool {settings.N_POOL} force_save = {force_save_db}')
+        result = workers.map(
+            load_file,
+            [(file, force_save_db) for file in get_list_nc(settings.BINFILES)],
+        )
+    # logger.info(result)
+    logger.info(
+        f'Numero de pool {settings.N_POOL} force_save = {force_save_db}'
+    )
     logger.info(f'tempo total = {time() - main_start}s')
     logger.info(f'criando {settings.BIGTIFF}')
-    with open(settings.BIGTIFF,'wb') as wfd:
+    with open(settings.BIGTIFF, 'wb') as wfd:
         for file in glob(f'{settings.DIRMAP}/*/*/*.map'):
-            with open(file,'rb') as fd:
+            with open(file, 'rb') as fd:
                 shutil.copyfileobj(fd, wfd)
-    
+
 
 if __name__ == '__main__':
     main()

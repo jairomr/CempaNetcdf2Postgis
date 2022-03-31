@@ -2,7 +2,7 @@ LAYER
     NAME "{{view_name}}"
     {% if geotiff %}
     DATA "{{file_name}}"
-    EXTENT  -53.251209334 -19.499150809 -45.9069681829999 -12.3952103039999
+    EXTENT  -55.0000000000000000 -21.0000000000000000 -42.9614372253417969 -8.9754829406738299
     METADATA
       "ows_title" "{{ows_title}}"
       "ows_abstract" "{{ows_abstract}}"
@@ -20,7 +20,7 @@ LAYER
     CONNECTIONTYPE POSTGIS
     CONNECTION "host={{host}} port={{port}} dbname={{dbname}} user={{user}} password={{password}}"
     DATA "geom from (select * from {{view_name}} where %MSFILTER% ) as subquery using unique gid using srid=4674"
-    EXTENT  -53.251209334 -19.499150809 -45.9069681829999 -12.3952103039999
+    EXTENT  -55.0000000000000000 -21.0000000000000000 -42.9614372253417969 -8.9754829406738299
     PROCESSING "CLOSE_CONNECTION=DEFER"
     METADATA
       "ows_title" "{{ows_title}}"

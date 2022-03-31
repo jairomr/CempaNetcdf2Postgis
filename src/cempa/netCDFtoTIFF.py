@@ -3,8 +3,8 @@ from time import time
 
 import numpy as np
 
-from cempa.config import logger, settings
-from cempa.functions import create_folder_for_tiffs, get_time
+from cempa.util.config import logger, settings
+from cempa.util.functions import create_folder_for_tiffs, get_time
 from generatmap.map import creat_map_file
 
 

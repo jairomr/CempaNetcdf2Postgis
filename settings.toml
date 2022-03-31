@@ -1,14 +1,11 @@
 MAPFILE = "teste.map"
-DIRMAP = "/Volumes/backup/ufg/cempa/maps"
-BIGTIFF = "/Volumes/backup/ufg/cempa/cempa_all_map.map"
-FILES_NC = "/Volumes/backup/dowloads/2022011200"
+CEMPADIR = "/STORAGE/catalog/cempa/"
 N_POOL = 10
 vars = ['albedt','tempc','ue_avg','ve_avg',
 'w','rh','geo','cloud','precip','acccon',
 'sfc_press','sea_press','t2mj','td2mj','u10mj',
 'v10mj','le','h','rshort','rlong','rlongup']
 DBLINK = 'sqlite:////data.bd'
-rasterRes = 0.09
 
 IGNOREHASHFILE = true
 forceCreateFiles = false

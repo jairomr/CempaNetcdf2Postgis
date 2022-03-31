@@ -7,7 +7,7 @@ line_length = 81
 
 [tool.poetry]
 name = "cempa"
-version = "0.1.0"
+version = "2.1.0"
 description = ""
 authors = ["Rocha, Jairo <devjairomr@gmail.com>"]
 license = "MIT"
@@ -15,7 +15,6 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.9.10"
 geopandas = "^0.10.2"
-netCDF4 = "^1.5.8"
 pandas = "^1.4.0"
 numpy = "^1.22.1"
 click = "^8.0.3"
@@ -26,9 +25,9 @@ GeoAlchemy2 = "^0.10.2"
 psycopg2 = "^2.9.3"
 seaborn = "^0.11.2"
 Jinja2 = "^3.0.3"
-rasterio = "^1.2.10"
-rioxarray = "^0.10.1"
 xarray = "^0.21.1"
+requests = "^2.27.1"
+beautifulsoup4 = "^4.10.0"
 
 [tool.poetry.dev-dependencies]  
 ipython = "^8.0.1"
