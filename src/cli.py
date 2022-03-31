@@ -8,6 +8,7 @@ from dynaconf import Dynaconf
 from cempa.model import clear_tables
 #from cempa.netcdf2postgis import main
 from cempa.util.config import logger
+from cempa.dowloads import dowloads
 
 initial_config = Dynaconf(
     envvar_prefix='CEMPA',
@@ -31,6 +32,8 @@ def cli_main(clear, force_save_bd):
     logger.info(
         f'Numero de pool {initial_config.N_POOL} force_save = {initial_config.FORCE_SAVE_BD}'
     )
+    if dowloads():
+        pass
     
     #main(initial_config.FORCE_SAVE_BD)
 
