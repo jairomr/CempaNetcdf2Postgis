@@ -5,7 +5,7 @@ from shutil import rmtree
 import click
 from dynaconf import Dynaconf
 
-from cempa.model import clear_tables
+#from cempa.model import clear_tables
 #from cempa.netcdf2postgis import main
 from cempa.util.config import logger
 from cempa.dowloads import dowloads
@@ -23,7 +23,7 @@ def cli_main(clear, force_save_bd):
     environ['CEMPA_FORCE_SAVE_BD'] = str(force_save_bd).lower()
 
     if clear:
-        clear_tables()
+        #clear_tables()
         my_dir = initial_config.DIRMAP
         if isdir(my_dir):
             rmtree(my_dir)
