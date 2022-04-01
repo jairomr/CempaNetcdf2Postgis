@@ -8,12 +8,12 @@ import pandas as pd
 import xarray as xr
 from netCDF4 import Dataset
 
-from cempa.netCDFtoTIFF import nc2tiff
-from cempa.util.config import is_goias, lats, logger, lons, ormdtype, settings
-from cempa.util.db import engine, save_df_bd
-from cempa.util.hash import data_frame2hash, generate_file_md5
+from cirrus.netCDFtoTIFF import nc2tiff
+from cirrus.util.config import is_goias, lats, logger, lons, ormdtype, settings
+from cirrus.util.db import engine, save_df_bd
+from cirrus.util.hash import data_frame2hash, generate_file_md5
 
-from cempa.util.functions import (  # isort:skip
+from cirrus.util.functions import (  # isort:skip
     exists_in_the_bank,
     get_list_nc,
     get_time,

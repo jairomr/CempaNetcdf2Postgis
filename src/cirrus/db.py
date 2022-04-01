@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.schema import MetaData
 from sqlalchemy import Table
 
-from cempa.config import settings, logger
+from cirrus.config import settings, logger
 
 Base = declarative_base()
 

@@ -7,7 +7,7 @@ from shutil import rmtree
 from bs4 import BeautifulSoup
 from requests import get
 
-from cempa.util.config import logger, settings
+from cirrus.util.config import logger, settings
 
 today = date.today()
 url_cempa_files = (
@@ -23,13 +23,12 @@ class NotTheInformationForToday(Exception):
 
 def get_links(link=''):
     request = get(f'{url_cempa_files}{link}')
-    print(request.status_code)
     if request.status_code == 200:
-        soup = BeautifulSoup(request.text)
+        soup = BeautifulSoup(request.text, features="html5lib")
         return [
             _link
             for _link in [i.get('href') for i in soup.find_all('a')]
-            if '.gra' in link
+            if '.gra' in _link
         ]
     raise NotTheInformationForToday
 
@@ -37,6 +36,7 @@ def get_links(link=''):
 def save_file(args):
     try:
         url, file_name = args
+        logger.debug(f"Dowload: {url.split('/')[-1].replace('.gra','')}")
         request = get(url)
         with open(file_name, 'wb') as f:
             f.write(request.content)
@@ -61,9 +61,12 @@ def downloads_files():
         (f'{url_cempa_files}{file}', f'{downloads_dir}/{file}')
         for file in get_links()
     ]
+    logger.info('Starting Data Download')
     with Pool(settings.N_POOL) as workers:
         result = workers.map(save_file, files_link)
+    logger.info('End Data Dowload')
     return all(result)
 
 if __name__ == '__main__':
     downloads_files()
+
